@@ -1,4 +1,7 @@
 RubyPage::Application.routes.draw do
+
+  root :to => 'application#index'
+
   scope 'sendgrid' do
     get '/' => 'sendgrid#index'
   end
