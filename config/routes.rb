@@ -1,6 +1,6 @@
 RubyPage::Application.routes.draw do
-  scope ‘sendgrid’ do
-    get ‘/‘ => ‘sendgrid#index’
+  scope 'sendgrid' do
+    get '/' => 'sendgrid#index'
   end
   # get "sendgrid/index"
   # The priority is based upon order of creation: first created -> highest priority.

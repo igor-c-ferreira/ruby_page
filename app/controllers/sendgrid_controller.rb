@@ -1,6 +1,6 @@
 class SendgridController < ApplicationController
 	def index
-		msg = {:status => “Ok”}
-		render.json => msg
+		msg = { :status => "ok", :message => "Success!", :html => "<b>...</b>" }
+		render :json => msg
 	end
 end
