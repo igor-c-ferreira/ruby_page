@@ -4,13 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   protect_from_forgery with: :null_session
 
-before_filter :check_format
-
-
-  def check_format
-    render :nothing => true, :status => 406 unless (params[:format] == 'json' || params[:format] == 'xml')
-  end
-
 	respond_to :json, :xml
 
 	def index
