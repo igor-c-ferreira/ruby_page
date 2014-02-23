@@ -44,6 +44,8 @@ end
 # Use unicorn as the app server
 gem 'unicorn'
 
+gem 'mail'
+
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
