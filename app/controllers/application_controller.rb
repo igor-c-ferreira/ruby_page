@@ -16,7 +16,7 @@ before_filter :check_format
 	def index
 		msg = { :status => "error", :message => "Bad access!"}
 		render :json => msg, :status => 404 unless (params[:format] != 'json')
-		render :xml => msg.to_xml(:root => ‘response’), :status => 404 unless (params[:format] != 'xml')
+		render :xml => msg.to_xml(:root => 'response'), :status => 404 unless (params[:format] != 'xml')
 	end
 
 end
