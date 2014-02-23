@@ -4,10 +4,19 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   protect_from_forgery with: :null_session
 
-	def index
-		msg = { :status => "ok", :message => "Success!", :html => "<b>...</b>" }
-		render :json => msg
-	end
+before_filter :check_format
 
+
+  def check_format
+    render :nothing => true, :status => 406 unless (params[:format] == 'json' || params[:format] == 'xml')
+  end
+
+	respond_to :json, :xml
+
+	def index
+		msg = { :status => "error", :message => "Bad access!"}
+		render :json => msg, :status => 404 unless (params[:format] != 'json')
+		render :xml => msg.to_xml(:root => ‘response’), :status => 404 unless (params[:format] != 'xml')
+	end
 
 end
