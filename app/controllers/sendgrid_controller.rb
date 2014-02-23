@@ -13,16 +13,15 @@ class SendgridController < ApplicationController
                 delivery_method :smtp, { :address   => "smtp.sendgrid.net",
                     :port      => 587,
                     :domain    => "pogamadores.com",
-                    :user_name => "igorcferreira",
-                    :password  => "C4r4ct3r3$",
+                    :user_name => ENV['SENDGRID_USER'],
+                    :password  => ENV['SENDGRID_PASSWORD'],
                     :authentication => 'plain',
                     :enable_starttls_auto => true }
             end
             
-            mail = Mail.deliver do
-                to 'igorferreiracastanheda@gmail.com'
+            mail = Mail.new do
                 from 'POGAmadores <contato@pogamadores.com>'
-                subject 'Sendgrid test'
+                subject 'Sendgrid test with env'
                 text_part do
                     body msg.to_json()
                 end
@@ -31,6 +30,9 @@ class SendgridController < ApplicationController
                     body '<p>' + msg.to_json() + '</p>'
                 end
             end
+            
+            mail[:to] = params[:from]
+            mail.deliver!
         end
         
 		render :json => msg, :status => 200 unless params[:format] != 'json'

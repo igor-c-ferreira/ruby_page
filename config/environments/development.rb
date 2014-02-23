@@ -26,4 +26,8 @@ RubyPage::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+  
+  ENV['SENDGRID_USER'] = "igorcferreira"
+  ENV['SENDGRID_PASSWORD'] = "C4r4ct3r3$"
+  
 end
