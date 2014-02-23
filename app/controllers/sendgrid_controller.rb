@@ -7,7 +7,7 @@ class SendgridController < ApplicationController
         
         @from = params[:from];
         
-        unless from.nil?
+        unless @from.nil?
             
             Mail.defaults do
                 delivery_method :smtp, { :address   => "smtp.sendgrid.net",
