@@ -48,6 +48,8 @@ gem 'unicorn'
 
 gem 'mail'
 
+gem 'rails_12factor'
+
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
