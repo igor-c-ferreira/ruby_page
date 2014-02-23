@@ -35,6 +35,6 @@ class SendgridController < ApplicationController
         
 		render :json => msg, :status => 200 unless params[:format] != 'json'
 		render :xml => msg.to_xml(:root => 'response'), :status => 200 unless params[:format] != 'xml'
-        render :nothing => true, :status => 200
+        render :nothing => true, :status => 200 unless params[:format] != nil
 	end
 end
