@@ -47,7 +47,7 @@ end
 gem 'unicorn'
 
 gem 'mail'
-
+gem 'pusher'
 gem 'rails_12factor'
 
 # Use Capistrano for deployment

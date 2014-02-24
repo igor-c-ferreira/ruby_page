@@ -1,4 +1,5 @@
 require 'mail'
+require 'pusher'
 
 class SendgridController < ApplicationController
 	def index
@@ -34,9 +35,22 @@ class SendgridController < ApplicationController
             mail[:to] = params[:from]
             mail.deliver!
         end
-        
-		render :json => msg, :status => 200 unless params[:format] != 'json'
-		render :xml => msg.to_xml(:root => 'response'), :status => 200 unless params[:format] != 'xml'
-        render :nothing => true, :status => 200 unless params[:format] != nil
+		
+		Pusher.app_id = ENV['PUSH_APP_ID']
+		Pusher.key = ENV['PUSH_APP_KEY']
+		Pusher.secret = ENV['PUSH_APP_SECRET']
+		Pusher.host = "api-eu.pusher.com"
+		
+		begin
+			Pusher.trigger('sendgrid_email_parser', 'received_email', msg)
+			render :json => msg.to_json, :status => 200 unless params[:format] != 'json'
+			render :xml => msg.to_xml(:root => 'response'), :status => 200 unless params[:format] != 'xml'
+			render :nothing => true, :status => 200 unless params[:format] != nil
+		rescue Pusher::Error => e
+			# (Pusher::AuthenticationError, Pusher::HTTPError, or Pusher::Error)
+			render :json => e.original_error.to_json, :status => 500 unless params[:format] != 'json'
+			render :xml => e.original_error.to_xml(:root => 'response'), :status => 500 unless params[:format] != 'xml'
+			render :nothing => true, :status => 500 unless params[:format] != nil
+		end
 	end
 end
