@@ -40,6 +40,8 @@ class SendgridController < ApplicationController
 		Pusher.key = ENV['PUSH_APP_KEY']
 		Pusher.secret = ENV['PUSH_APP_SECRET']
 		Pusher.host = "api-eu.pusher.com"
+		Pusher.encrypted = true
+		Pusher.default_client.sync_http_client.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
 		
 		begin
 			Pusher.trigger('sendgrid_email_parser', 'received_email', msg)
